@@ -1,0 +1,24 @@
+galaxy_info:
+  author: Jason Ernst
+  role_name: gcloud_cli
+  description: Install Google Cloud CLI (gcloud)
+  company: ''
+  license: GPLv3
+  min_ansible_version: "2.4"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic # 18.04 LTS
+        - focal  # 20.04 LTS
+        - jammy  # 22.04 LTS
+        - noble  # 24.04 LTS
+    - name: Debian
+      versions:
+        - buster  # 10
+        - bullseye # 11
+        - bookworm # 12
+  galaxy_tags:
+    - gcloud
+    - google-cloud
+    - cli
+    - application

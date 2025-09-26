@@ -1,0 +1,15 @@
+---
+namespace: compscidr
+name: gcloud_cli
+authors:
+    - Jason Ernst <ernstjason1@gmail.com>
+description: Installs Google Cloud CLI (gcloud)
+license_file: LICENSE
+readme: README.md
+version: 0.0.1
+repository: https://github.com/compscidr/ansible-gcloud-cli
+tags:
+    - gcloud
+    - google-cloud
+    - cli
+    - application
