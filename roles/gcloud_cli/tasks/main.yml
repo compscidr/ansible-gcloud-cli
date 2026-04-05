@@ -1,0 +1,62 @@
+---
+- name: Update apt cache
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install prerequisites
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - gnupg
+      - curl
+    state: present
+
+- name: Add Google Cloud GPG key
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.get_url:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    dest: /tmp/google-cloud-apt-key.gpg
+    mode: '0644'
+
+- name: Import Google Cloud GPG key
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.shell: |
+    gpg --dearmor /tmp/google-cloud-apt-key.gpg > /usr/share/keyrings/cloud.google.gpg
+  args:
+    creates: /usr/share/keyrings/cloud.google.gpg
+
+- name: Add Google Cloud SDK repository
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main"
+    filename: google-cloud-sdk
+    state: present
+
+- name: Update apt cache after adding repository
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install Google Cloud SDK
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.apt:
+    name: google-cloud-sdk
+    state: present
+
+- name: Clean up temporary GPG key file
+  tags: gcloud_cli
+  become: true
+  ansible.builtin.file:
+    path: /tmp/google-cloud-apt-key.gpg
+    state: absent

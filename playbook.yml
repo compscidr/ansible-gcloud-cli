@@ -1,0 +1,4 @@
+- name: Install Google Cloud CLI
+  hosts: all
+  roles:
+    - gcloud_cli
